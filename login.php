@@ -10,10 +10,7 @@
             $email = $conn->real_escape_string($_POST['email']);
             $password=$conn->real_escape_string($_POST['password']);
 
-           
-           
               if(login($email, $password, $conn)===TRUE){
-
                     $message ="login successful";
                     header("location: welcome.php");
 
@@ -22,38 +19,36 @@
                 $message ="login failed. wrong email or password";
                 header("location: login.php");
               }
-              
-          
+                        
 
              }
         
-
         function login($email, $password, $conn){
             
-            $sql = "select * from user where email= '$email' and password ='$password'";
+            $sql = "select * from user where email= '$email'";
             $result = $conn->query($sql);
 
             if($result->num_rows>0){
                 while($row=$result->fetch_assoc()){
                 session_start();
-
+                if(password_verify($password,$row["password"])){
+                
                 $_SESSION["loggedin"] = true;
                 $_SESSION["username"] = $row["first_name"]." ".$row["last_name"];
                 $_SESSION["user_id"] = $row["user_id"];
-                }
-               
-                
                 return TRUE;
+                }
+
+                }
+                
+               
             }else{
               
               return FALSE;  
             }
         }
 
-       
         $conn->close();
-        
-        
 
 ?>
 

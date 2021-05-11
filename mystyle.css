@@ -86,3 +86,14 @@ ul div{
     margin: 20px 0 0 400px;
     border-radius: 15px;
 }
+@media screen and (max-width:500px) {
+    .form {
+        border-radius: 5px;
+        background-color: #f2f2f2;
+        padding: 40px;
+        width:max-content;
+        margin: 20px 0 0 0px;
+        border-radius: 15px;
+    }
+    
+}

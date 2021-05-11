@@ -33,7 +33,8 @@ if(isset($_POST["reset"])){
 
 function resetpassword($newpassword,  $user_id, $conn){
 
-    $sql="update user set password='$newpassword' where user_id='$user_id' ";
+    $newpass  = password_hash($newpassword, PASSWORD_DEFAULT);
+    $sql="update user set password='$newpass' where user_id='$user_id' ";
     
     if($conn->query($sql)===TRUE){
       
@@ -47,13 +48,20 @@ function resetpassword($newpassword,  $user_id, $conn){
 //checks if password and user id exist in the database
 function checkoldpassword($oldpassword,$user_id,$conn){
 
-    $sql = "select * from user where user_id= '$user_id' and password ='$oldpassword'";
+    $sql = "select * from user where user_id= '$user_id'";
     $result = $conn->query($sql);
 
     if($result->num_rows>0){
+        while($row=$result->fetch_assoc()){
+            if(password_verify($oldpassword, $row["password"])){
+
+                return TRUE;
+            }
+
+
+        }      
         
         
-        return TRUE;
     }else{
       
       return FALSE;  

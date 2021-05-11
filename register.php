@@ -14,8 +14,7 @@
             $email = $conn->real_escape_string($_POST['email']);
             $password=$conn->real_escape_string($_POST['password']);
             
-            echo $fname;
-
+    
            
             if(checkUser($email,$conn)===TRUE){
                 $message ="Failed to register, email address exists";
@@ -33,7 +32,8 @@
 
         function register( $fname, $lname , $email,$password,$conn){
             
-            $sql = "insert into user (first_name, last_name ,email, password) values('$fname','$lname','$email','$password')";
+            $pass  =password_hash($password, PASSWORD_DEFAULT); 
+            $sql = "insert into user (first_name, last_name ,email, password) values('$fname','$lname','$email','$pass')";
             if($conn->query($sql)===TRUE){
                 $message= "registration successful";
             

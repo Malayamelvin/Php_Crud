@@ -2,7 +2,7 @@
  
     DEFINE('servername','localhost');
     DEFINE('username','root');
-    DEFINE('password', '');
+    DEFINE('password', 'Mwiimuka2013');
     DEFINE('dbname','php_crud');  
 
     $conn = new mysqli(servername,username,password,dbname);
